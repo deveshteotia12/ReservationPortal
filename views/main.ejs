@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/form.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="largeContainer">
+        <div class="heading">
+            <h1>Your Appointments</h1>
+            <form action="/edit/search" method="POST">
+                <input type="text" name="filterItem" placeholder="Filter Appointments by Name"></input>
+                <button type="submit">Filter</button>
+            </form>
+       </div>
+        <div class="itemContainer"> 
+            <%if(List.length===0){%>
+                <p>No Appointment Added Yet</p>
+            <%}%>
+            <%for(i=0;i<List.length;i++){%>
+                <div class="item">
+                    <p>Name: <%=List[i].name%></p>
+                    <p>Appointment Time: <%=List[i].time%></p>
+                    <p>Description : <%=List[i].Description%></p>
+                    <p> Address: <%=List[i].address%> </p>
+                    <div class="buttons">
+                        <form action="/edit/delete" method="POST">
+                            <input style="display: none;" value="<%=List[i].uniqueID%>" name="uniqueID"></input>
+                            <button  type="submit">Delete</button>
+                        </form>
+                        <form action="/edit/<%=List[i].uniqueID%>" method="GET">
+                            <button type="submit">Edit</button>
+                        </form>
+                    </div>
+                </div>
+            <%}%>
+        </div>
+    </div>
+</body>
+</html>
